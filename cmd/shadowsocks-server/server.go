@@ -54,7 +54,7 @@ func getRequest(conn *ss.Conn) (host string, err error) {
 	if _, err = io.ReadFull(conn, buf[:idType+1]); err != nil {
 		return
 	}
-	fmt.Printf("第一个字节是 %v", buf[0])
+	fmt.Printf("第一个字节是 %v\n", buf[0])
 
 	var reqStart, reqEnd int
 	addrType := buf[idType]
@@ -67,6 +67,7 @@ func getRequest(conn *ss.Conn) (host string, err error) {
 		if _, err = io.ReadFull(conn, buf[idType+1:idDmLen+1]); err != nil {
 			return
 		}
+		fmt.Printf("地址长度是 %v\n", int(buf[idDmLen]))
 		reqStart, reqEnd = idDm0, idDm0+int(buf[idDmLen])+lenDmBase
 	default:
 		err = fmt.Errorf("addr type %d not supported", addrType&ss.AddrMask)
@@ -88,7 +89,7 @@ func getRequest(conn *ss.Conn) (host string, err error) {
 	case typeDm:
 		host = string(buf[idDm0 : idDm0+int(buf[idDmLen])])
 	}
-	fmt.Printf("host 是 %v", host)
+	fmt.Printf("host 是 %v\n", host)
 	// parse port
 	port := binary.BigEndian.Uint16(buf[reqEnd-2 : reqEnd])
 	host = net.JoinHostPort(host, strconv.Itoa(int(port)))
