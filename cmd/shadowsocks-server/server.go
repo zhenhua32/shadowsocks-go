@@ -54,6 +54,7 @@ func getRequest(conn *ss.Conn) (host string, err error) {
 	if _, err = io.ReadFull(conn, buf[:idType+1]); err != nil {
 		return
 	}
+	fmt.Printf("第一个字节是 %v", buf[0])
 
 	var reqStart, reqEnd int
 	addrType := buf[idType]

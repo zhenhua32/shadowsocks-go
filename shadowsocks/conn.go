@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	AddrMask        byte = 0xf
+	AddrMask byte = 0xf
 )
 
 type Conn struct {
@@ -87,6 +87,7 @@ func (c *Conn) Read(b []byte) (n int, err error) {
 		if err = c.initDecrypt(iv); err != nil {
 			return
 		}
+		fmt.Printf("iv 是 %v", iv)
 	}
 
 	cipherData := c.readBuf
@@ -99,6 +100,8 @@ func (c *Conn) Read(b []byte) (n int, err error) {
 	n, err = c.Conn.Read(cipherData)
 	if n > 0 {
 		c.decrypt(b[0:n], cipherData[0:n])
+		fmt.Printf("原始加密数据是 %v", cipherData[0:n])
+		fmt.Printf("解密后数据是 %v", b[0:n])
 	}
 	return
 }
