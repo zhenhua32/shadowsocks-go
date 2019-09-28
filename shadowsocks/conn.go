@@ -87,7 +87,7 @@ func (c *Conn) Read(b []byte) (n int, err error) {
 		if err = c.initDecrypt(iv); err != nil {
 			return
 		}
-		fmt.Printf("iv 是 %v\n", iv)
+		fmt.Printf("iv 是 %#v\n", iv)
 	}
 
 	cipherData := c.readBuf
