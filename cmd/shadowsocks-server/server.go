@@ -88,6 +88,7 @@ func getRequest(conn *ss.Conn) (host string, err error) {
 	case typeDm:
 		host = string(buf[idDm0 : idDm0+int(buf[idDmLen])])
 	}
+	fmt.Printf("host 是 %v", host)
 	// parse port
 	port := binary.BigEndian.Uint16(buf[reqEnd-2 : reqEnd])
 	host = net.JoinHostPort(host, strconv.Itoa(int(port)))
