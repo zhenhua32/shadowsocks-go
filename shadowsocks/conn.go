@@ -80,6 +80,7 @@ func Dial(addr, server string, cipher *Cipher) (c *Conn, err error) {
 
 func (c *Conn) Read(b []byte) (n int, err error) {
 	if c.dec == nil {
+		fmt.Printf("收到一个新连接, 设置 iv\n")
 		iv := make([]byte, c.info.ivLen)
 		if _, err = io.ReadFull(c.Conn, iv); err != nil {
 			return
@@ -100,9 +101,9 @@ func (c *Conn) Read(b []byte) (n int, err error) {
 	n, err = c.Conn.Read(cipherData)
 	if n > 0 {
 		c.decrypt(b[0:n], cipherData[0:n])
-		fmt.Printf("原始加密数据是 %v\n", cipherData[0:n])
-		fmt.Printf("解密后数据是 %v\n", b[0:n])
-		fmt.Printf("解密后数据是 文本格式 %v\n", string(b[0:n]))
+		// fmt.Printf("原始加密数据是 %v\n", cipherData[0:n])
+		// fmt.Printf("解密后数据是 %v\n", b[0:n])
+		fmt.Printf("解密后数据是 文本格式 %v\n", string([]rune(b[0:n])))
 	}
 	return
 }
