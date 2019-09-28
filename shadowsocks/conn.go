@@ -103,7 +103,7 @@ func (c *Conn) Read(b []byte) (n int, err error) {
 		c.decrypt(b[0:n], cipherData[0:n])
 		// fmt.Printf("原始加密数据是 %v\n", cipherData[0:n])
 		// fmt.Printf("解密后数据是 %v\n", b[0:n])
-		fmt.Printf("解密后数据是 文本格式 %v\n", string([]rune(b[0:n])))
+		fmt.Printf("解密后数据是 文本格式 %v\n", string(b[0:n]))
 	}
 	return
 }
